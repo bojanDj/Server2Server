@@ -1,5 +1,7 @@
 import paramiko
 
+#izvrsava se na .111, prebacuje fajlove na .140, tamo ih izvrsava i belezi
+
 class SSHConnection(object):
     def __init__(self, host, username, password, port=22):
         self.sftp = None
@@ -25,21 +27,21 @@ class SSHConnection(object):
         self.transport.close()
         
 if __name__ == "__main__":
-    host = "myserver"
-    username = "boki"
+    host = "10.1.133.140"
+    username = "sa"
     pw = "pass"
     
     list = os.listdir("/")
 	number_files = len(list)
 
-    origin = '/desktop/'
-    dst = '/desktop/'
+    origin = 'C:\ScriptFolder\Halk\'
+    dst = 'C:\DatabaseBackup\Deploy\'
     
     ssh = SSHConnection(host, username, pw)
     for x in list:
         ssh.copy(origin + x, dst + x)
     
-    stdout = ssh.exec_command('python /direktorijum/executionSkript.py')[1]
+    stdout = ssh.exec_command('python C:\DatabaseBackup\Deploy\executionSkript.py')[1]
     for line in stdout:
         print line
 
